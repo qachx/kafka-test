@@ -7,7 +7,10 @@
 - **Исходный код:** https://github.com/qachx/kafka-test
 - **Технологии:** Apache Kafka, Docker, Python (генератор данных), Kafka UI (веб-интерфейс).
 
-**💡 Важно:** В руководстве приведены команды для **Windows PowerShell** и **macOS/Linux** отдельно, так как синтаксис отличается.
+**💡 Важно:** 
+- В руководстве команды для **Windows PowerShell** и **macOS/Linux** отдельно, так как синтаксис отличается
+- **При копировании в Notion/Obsidian:** если URL превращается в ссылку с `<>`, копируйте URL из комментария выше команды
+- **URL всегда без угловых скобок:** `http://localhost:5000/send` (не `<http://localhost:5000/send>`)
 
 ---
 
@@ -132,7 +135,8 @@ $body = @{
     message = "Тестовое сообщение от QA инженера"
 } | ConvertTo-Json
 
-Invoke-RestMethod -Uri http://localhost:5000/send -Method POST -Body $body -ContentType "application/json"
+# URL без угловых скобок: http://localhost:5000/send
+Invoke-RestMethod -Uri "http://localhost:5000/send" -Method POST -Body $body -ContentType "application/json"
 ```
 
 **Для macOS/Linux:**
@@ -175,7 +179,8 @@ $body = @{
     }
 } | ConvertTo-Json -Depth 3
 
-Invoke-RestMethod -Uri http://localhost:5000/send -Method POST -Body $body -ContentType "application/json"
+# URL: http://localhost:5000/send
+Invoke-RestMethod -Uri "http://localhost:5000/send" -Method POST -Body $body -ContentType "application/json"
 ```
 
 **Для macOS/Linux:**
@@ -195,7 +200,8 @@ $body = @{
     message = "Нагрузочный тест заказа #{id}"
 } | ConvertTo-Json
 
-Invoke-RestMethod -Uri http://localhost:5000/send/bulk -Method POST -Body $body -ContentType "application/json"
+# URL: http://localhost:5000/send/bulk
+Invoke-RestMethod -Uri "http://localhost:5000/send/bulk" -Method POST -Body $body -ContentType "application/json"
 ```
 
 **Для macOS/Linux:**
@@ -239,7 +245,8 @@ $body = @{
     message = "Performance test message #{id}"
 } | ConvertTo-Json
 
-Invoke-RestMethod -Uri http://localhost:5000/send/bulk -Method POST -Body $body -ContentType "application/json"
+# URL: http://localhost:5000/send/bulk  
+Invoke-RestMethod -Uri "http://localhost:5000/send/bulk" -Method POST -Body $body -ContentType "application/json"
 ```
 
 **Для macOS/Linux:**
@@ -320,7 +327,8 @@ $body = @{
     message = "это не JSON объект заказа"
 } | ConvertTo-Json
 
-Invoke-RestMethod -Uri http://localhost:5000/send -Method POST -Body $body -ContentType "application/json"
+# URL: http://localhost:5000/send
+Invoke-RestMethod -Uri "http://localhost:5000/send" -Method POST -Body $body -ContentType "application/json"
 ```
 
 **Для macOS/Linux:**
