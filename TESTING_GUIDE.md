@@ -7,6 +7,8 @@
 - **Исходный код:** https://github.com/qachx/kafka-test
 - **Технологии:** Apache Kafka, Docker, Python (генератор данных), Kafka UI (веб-интерфейс).
 
+**💡 Важно:** В руководстве приведены команды для **Windows PowerShell** и **macOS/Linux** отдельно, так как синтаксис отличается.
+
 ---
 
 ## Часть 1: Подготовка рабочего пространства
@@ -15,7 +17,7 @@
 
 ### Шаг 1: Скачивание проекта
 
-Откройте терминал (PowerShell для Windows, Terminal для macOS) и выполните команду:
+Откройте терминал (PowerShell для Windows, Terminal для macOS) и выполните команды:
 
 ```bash
 git clone https://github.com/qachx/kafka-test.git
@@ -123,8 +125,17 @@ docker-compose up -d
 
 ### Шаг 1: Тестирование простой отправки
 
-Выполните в терминале:
+**Для Windows PowerShell:**
+```powershell
+$body = @{
+    topic = "test-topic"
+    message = "Тестовое сообщение от QA инженера"
+} | ConvertTo-Json
 
+Invoke-RestMethod -Uri "http://localhost:5000/send" -Method POST -Body $body -ContentType "application/json"
+```
+
+**Для macOS/Linux:**
 ```bash
 curl -X POST http://localhost:5000/send \
   -H "Content-Type: application/json" \
@@ -150,6 +161,22 @@ curl -X POST http://localhost:5000/send \
 
 ### Шаг 3: Тестирование с ключом (для партиционирования)
 
+**Для Windows PowerShell:**
+```powershell
+$body = @{
+    topic = "users"
+    key = "test_user_999"
+    message = @{
+        user_id = 999
+        action = "manual_test"
+        tester = "QA Engineer"
+    }
+} | ConvertTo-Json -Depth 3
+
+Invoke-RestMethod -Uri "http://localhost:5000/send" -Method POST -Body $body -ContentType "application/json"
+```
+
+**Для macOS/Linux:**
 ```bash
 curl -X POST http://localhost:5000/send \
   -H "Content-Type: application/json" \
@@ -158,6 +185,18 @@ curl -X POST http://localhost:5000/send \
 
 ### Шаг 4: Нагрузочное тестирование
 
+**Для Windows PowerShell:**
+```powershell
+$body = @{
+    topic = "orders"
+    count = 100
+    message = "Нагрузочный тест заказа #{id}"
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "http://localhost:5000/send/bulk" -Method POST -Body $body -ContentType "application/json"
+```
+
+**Для macOS/Linux:**
 ```bash
 curl -X POST http://localhost:5000/send/bulk \
   -H "Content-Type: application/json" \
@@ -182,7 +221,7 @@ curl -X POST http://localhost:5000/send/bulk \
 
 ### Шаг 2: Тестирование пропускной способности
 
-Откройте терминал и выполните команду для наблюдения за консьюмером:
+Откройте **новый терминал** и выполните команду для наблюдения за консьюмером:
 
 ```bash
 docker-compose logs -f consumer
@@ -190,6 +229,18 @@ docker-compose logs -f consumer
 
 Параллельно отправьте большую пачку сообщений:
 
+**Для Windows PowerShell:**
+```powershell
+$body = @{
+    topic = "metrics"
+    count = 200
+    message = "Performance test message #{id}"
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "http://localhost:5000/send/bulk" -Method POST -Body $body -ContentType "application/json"
+```
+
+**Для macOS/Linux:**
 ```bash
 curl -X POST http://localhost:5000/send/bulk \
   -H "Content-Type: application/json" \
@@ -260,6 +311,17 @@ docker-compose logs -f consumer
 
 Попробуйте отправить сообщение с неверной структурой:
 
+**Для Windows PowerShell:**
+```powershell
+$body = @{
+    topic = "orders"
+    message = "это не JSON объект заказа"
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "http://localhost:5000/send" -Method POST -Body $body -ContentType "application/json"
+```
+
+**Для macOS/Linux:**
 ```bash
 curl -X POST http://localhost:5000/send \
   -H "Content-Type: application/json" \
