@@ -132,7 +132,7 @@ $body = @{
     message = "Тестовое сообщение от QA инженера"
 } | ConvertTo-Json
 
-Invoke-RestMethod -Uri "http://localhost:5000/send" -Method POST -Body $body -ContentType "application/json"
+Invoke-RestMethod -Uri http://localhost:5000/send -Method POST -Body $body -ContentType "application/json"
 ```
 
 **Для macOS/Linux:**
@@ -173,7 +173,7 @@ $body = @{
     }
 } | ConvertTo-Json -Depth 3
 
-Invoke-RestMethod -Uri "http://localhost:5000/send" -Method POST -Body $body -ContentType "application/json"
+Invoke-RestMethod -Uri http://localhost:5000/send -Method POST -Body $body -ContentType "application/json"
 ```
 
 **Для macOS/Linux:**
@@ -193,7 +193,7 @@ $body = @{
     message = "Нагрузочный тест заказа #{id}"
 } | ConvertTo-Json
 
-Invoke-RestMethod -Uri "http://localhost:5000/send/bulk" -Method POST -Body $body -ContentType "application/json"
+Invoke-RestMethod -Uri http://localhost:5000/send/bulk -Method POST -Body $body -ContentType "application/json"
 ```
 
 **Для macOS/Linux:**
@@ -237,7 +237,7 @@ $body = @{
     message = "Performance test message #{id}"
 } | ConvertTo-Json
 
-Invoke-RestMethod -Uri "http://localhost:5000/send/bulk" -Method POST -Body $body -ContentType "application/json"
+Invoke-RestMethod -Uri http://localhost:5000/send/bulk -Method POST -Body $body -ContentType "application/json"
 ```
 
 **Для macOS/Linux:**
@@ -318,7 +318,7 @@ $body = @{
     message = "это не JSON объект заказа"
 } | ConvertTo-Json
 
-Invoke-RestMethod -Uri "http://localhost:5000/send" -Method POST -Body $body -ContentType "application/json"
+Invoke-RestMethod -Uri http://localhost:5000/send -Method POST -Body $body -ContentType "application/json"
 ```
 
 **Для macOS/Linux:**
